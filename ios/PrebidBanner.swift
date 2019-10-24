@@ -9,20 +9,13 @@ class PrebidBanner: UIView {
   
   // global vars
   var coreLocation: CLLocationManager?
-  var sizes = ["banner", "leaderboard", "mediumRectangle"]
-  var isInitialized = false
-//  let request = DFPRequest()
-//  var dfpBanner: DFPBannerView!
   
   // init
   override init(frame: CGRect) {
     super.init(frame: frame)
-    // will be late, but do it here to see if it will work
     Prebid.shared.prebidServerHost = PrebidHost.Rubicon;
-    Prebid.shared.prebidServerAccountId = "1001"// "13116";
+    Prebid.shared.prebidServerAccountId = "1001"
     Prebid.shared.shareGeoLocation = true
-//    coreLocation = CLLocationManager()
-//    coreLocation?.requestWhenInUseAuthorization()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -78,7 +71,7 @@ class PrebidBanner: UIView {
     request.testDevices = [ kGADSimulatorID ];
     let dfpBannerView = DFPBannerView(adSize: adSize)
     dfpBannerView.tag = 100
-    // dfpBannerView.adUnitID = "7009/mapp.noticias_section_noticias/inicio"
+    // dfpBannerView.adUnitID = "xxxxxxxxxxxx"
     dfpBannerView.rootViewController = UIApplication.shared.keyWindow!.rootViewController
     
     dfpBannerView.backgroundColor = .orange
@@ -111,24 +104,5 @@ class PrebidBanner: UIView {
       return kGADAdSizeBanner
     }
   }
-    
-//    dfpBanner = DFPBannerView(adSize: kGADAdSizeMediumRectangle)
-//    dfpBanner.adUnitID = "/7009/mapp.noticias_section_noticias/inicio"
-////    dfpBanner.rootViewController = self
-////    dfpBanner.delegate = self
-//    dfpBanner.backgroundColor = .red
-//    self.addSubview(dfpBanner)
-//    request.testDevices = [(kGADSimulatorID as! String), "cc7ca766f86b43ab6cdc92bed424069b"]
-//
-//    bannerUnit.fetchDemand(adObject: self.request) { [weak self] (resultCode: ResultCode) in
-//        print("Prebid demand fetch for DFP \(resultCode.name())")
-//        self?.dfpBanner!.load(self?.request)
-//    }
-
-//  }
-
-  
-  
-
   
 }
