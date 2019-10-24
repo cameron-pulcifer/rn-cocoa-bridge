@@ -6,10 +6,10 @@ import GoogleMobileAds
 import PrebidMobile
 
 class PrebidBanner: UIView {
-  
+
   // global vars
   var coreLocation: CLLocationManager?
-  
+
   // init
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -17,11 +17,11 @@ class PrebidBanner: UIView {
     Prebid.shared.prebidServerAccountId = "1001"
     Prebid.shared.shareGeoLocation = true
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
+
   // RN props
   @objc var bannerSize: NSString = "" {
     didSet {
@@ -29,7 +29,7 @@ class PrebidBanner: UIView {
       loadView()
     }
   }
-  
+
   // RN props
   @objc var adUnit: NSString = "" {
     didSet {
@@ -37,43 +37,43 @@ class PrebidBanner: UIView {
       loadView()
     }
   }
-  
+
   // exposed to RN as function
   @objc var onClick: RCTDirectEventBlock?
-  
+
   func loadView() {
-    
+
     if self.adUnit == "" || self.bannerSize == "" {
       print("\nProps not ready. Banner: \(self.bannerSize) | Ad Unit: \(self.adUnit)\n")
       return
     }
-    
+
     if let viewWithTag = self.viewWithTag(100) {
       viewWithTag.removeFromSuperview()
     }
-    
+
     if self.bannerSize == "destroy" {
       print("\n\nDestroyed \(self.subviews.count)\n\n")
       return
     }
-    
+
     let adSize = self.getGadAdSize(self.bannerSize)
-    
+
     // Create the ad unit(s) - this is an example for a Banner ad unit
     let bannerUnit = BannerAdUnit(
       configId: String(self.adUnit),
       size: adSize.size
     )
-    
+
     print("Google Mobile Ads SDK version: \(DFPRequest.sdkVersion())")
-    
+
     let request = DFPRequest()
     request.testDevices = [ kGADSimulatorID ];
     let dfpBannerView = DFPBannerView(adSize: adSize)
     dfpBannerView.tag = 100
     // dfpBannerView.adUnitID = "xxxxxxxxxxxx"
     dfpBannerView.rootViewController = UIApplication.shared.keyWindow!.rootViewController
-    
+
     dfpBannerView.backgroundColor = .orange
     self.addSubview(dfpBannerView)
 
@@ -82,9 +82,9 @@ class PrebidBanner: UIView {
       // Load the dfp request
       dfpBannerView.load(request)
     }
-    
+
   }
-  
+
   func getGadAdSize(_ name:NSString) -> GADAdSize {
     if name == "banner" {
       return kGADAdSizeBanner
@@ -104,5 +104,5 @@ class PrebidBanner: UIView {
       return kGADAdSizeBanner
     }
   }
-  
+
 }
